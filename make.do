@@ -6,10 +6,10 @@
 make HEIS,  toc pkg readme version(1)                                        ///
      license("Academic Free License v3.0")                                   ///
      author("Ali Bahrami Sani, Morteza Mohandes Mojarrad")                   ///
-     affiliation("")                                                         ///
+     affiliation("Graduate student of economics at TeIAS, Graduate student of economics at TeIAS ") ///
      email("Ali.Bahrami.Sani@gmail.com, mortza.mohandes@gmail.com")          ///
      url("")                                                                 ///
      title("Iranian HEIS")                                                   ///
      description("")                                                         ///
      install("HEIS.ado")                                                     ///
-     iancillary("")                                                         
+     iancillary("HEIS.sthlp")                                               
