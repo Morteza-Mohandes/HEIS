@@ -8,7 +8,7 @@ make HEIS,  toc pkg readme version(1)                                        ///
      author("Ali Bahrami Sani, Morteza Mohandes Mojarrad")                   ///
      affiliation("Graduate student of economics at TeIAS, Graduate student of economics at TeIAS ") ///
      email("Ali.Bahrami.Sani@gmail.com, mortza.mohandes@gmail.com")          ///
-     url("")                                                                 ///
+     url("https://github.com/Iran-Indicators/HEIS")                                                                 ///
      title("Iranian HEIS")                                                   ///
      description("")                                                         ///
      install("HEIS.ado")                                                     ///
