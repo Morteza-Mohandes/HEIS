@@ -3,6 +3,9 @@ _v. 1_
 `HEIS` : Iranian HEIS
 =====================
 
+#### Description
+HEIS is a Stata package download and save the Iran household expenditure and income survey.
+
 #### Installation
 To install the package first you need to install "github" package:
 ```stata
@@ -40,6 +43,6 @@ Academic Free License v3.0
 Author
 ------
 
-**Ali Bahrami Sani, Morteza Mohandes Mojarrad**  
+**[__Ali Bahrami Sani__](https://alibahramisani.github.io/), Morteza Mohandes Mojarrad**  
 Graduate student of economics at TeIAS, Graduate student of economics at TeIAS  
 Ali.Bahrami.Sani@gmail.com, mortza.mohandes@gmail.com  
