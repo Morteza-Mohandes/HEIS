@@ -3,6 +3,15 @@ _v. 1_
 `HEIS` : Iranian HEIS
 =====================
 
+To install the package first you need to install "github" package:
+```stata
+net install github, from("https://haghish.github.io/github/")
+```
+
+
+
+
+
 
 ### License
 Academic Free License v3.0
