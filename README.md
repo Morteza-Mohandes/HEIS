@@ -33,7 +33,11 @@ In case you just need the weights:
 HEIS year, weight("true")
 ```
 For now, the dataset of 1394 is not available yet, but 1381-1400 are available.
-
+Moreover, you can use _path_ option to choose where you like install a dataset and build tables:
+ ```
+HEIS year, data("true") path("D:\Economics")
+```
+If you do not specify a location, it automatically downloads and saves on your current directory.
 
 
 
