@@ -6,7 +6,8 @@ program define HEIS
 	version 17
 	clear all
 
-syntax anything [,  weight(string) data(string) path(string)]
+syntax anything [,  weight(string) data(string) path(string) erase(string)]
+
 if "`path'" != ""{
 	cd "`path'"
 }
@@ -14,17 +15,17 @@ if "`path'" != ""{
 	if "`weight'" == "true"{
 	    foreach year in `anything'{
 			local Year : di mod(`year',100)
-		    copy https://github.com/AliBahramiSani/Iran-Household-Expenditure-and-Income-Survey/raw/main/HEIS%20Weights/HHWeights`year'.dta "\HHWeights`year'.dta" , replace
+		    cap copy https://github.com/AliBahramiSani/Iran-Household-Expenditure-and-Income-Survey/raw/main/HEIS%20Weights/HHWeights`year'.dta "\HHWeights`year'." , replace
+			
+			cap copy https://github.com/AliBahramiSani/Iran-Household-Expenditure-and-Income-Survey/raw/main/HEIS%20Weights/HHWeights`year'.dta "\HHWeights`year'." , replace
+			
 	}
 	}
 	if "`data'" == "true"{
 	    foreach year in `anything'{
-			local Year : di mod(`year',100)
-		    copy https://github.com/AliBahramiSani/HEIS_Data/raw/main/`year'.zip "./`year'.zip" , replace
-// 			unzipfile `year'.zip, replace
-			
+		    copy https://github.com/AliBahramiSani/HEIS_Data/raw/main/`year'.zip "./`year'.zip" , replace	
 			unzipfile "`year'.zip", replace
-			cap erase "year.zip"
+// 			cap erase "`year'.zip"
 // 			! move /y ".\`Year'\*.mdb" ".\"
 	}
 	}
@@ -43,24 +44,25 @@ di "`tables'"
 		
 		di "`year'"
 		odbc query "MS Access Database", dialog(complete)
+		pwd // current directory
 		cap odbc load, table(U`Year') lowercase
 			if _rc!=0 {
-				display "`Year' not found!"
+				display "U`Year' not found!"
+			}
+			else{
+				append_UR "" `Year'
 			}
 			
-			append_UR "" `Year'
-// 			cap save `year', replace
 		foreach table in `tables'{
 			di "cleaning table `table' of `Year'"
 			clear
 			cap odbc load, table(U`Year'`table') lowercase
 			if _rc!=0 {
 				display "U`Year'`table' not found!"
-				continue
 			}
-			append_UR `table' `Year'
-			clear
-			
+			else{
+				append_UR `table' `Year'
+			}
 		}
 		
 		if `year' == 89{
@@ -70,34 +72,39 @@ di "`tables'"
 			cap odbc load, table("`table'") lowercase
 			if _rc!=0 {
 				display "`table' not found!"
-				continue
 			}
-			cap save `table',replace 
-			clear
+			else{
+				cap save `table',replace 
+				clear
+			
+			}
 			local table 89P1
 			di "cleaning table `table' of year `year'"
 			cap odbc load, table("U`table'") lowercase
 			if _rc!=0 {
 				display "U`table' not found!"
-				continue
 			}
-			local year = ""
-			cap append_UR `table' `Year'
+			else{
+				cap append_UR `table' ""
+			}
+			
 		}
 		*odbc desc "U`i'P4S03"
 // 		odbc load, table("U`year'P1")
 	
 	}
-
-
-end
+	
+// if "`erase'" == "true"{
+// 	cap erase "HEIS`year'.mdb"
+// }
+// end
 
 **# append program
 program define append_UR 
 args table year
 	gen urban=1
 // 	cap `table' `year' // clean
-	save U`year'`table'.dta, replace
+	cap save U`year'`table'.dta, replace
 	clear
 	di "`year'"
 	di "R`year'`table'"
@@ -108,12 +115,12 @@ args table year
 		}
 	gen urban=0
 // 	cap `table' `year' // clean routine
-	save R`year'`table'.dta, replace
+	cap save R`year'`table'.dta, replace
 	append using U`year'`table'
 	save `year'`table', replace
 	clear
-	erase R`year'`table'.dta
-	erase U`year'`table'.dta
+	cap erase R`year'`table'.dta
+	cap erase U`year'`table'.dta
 end
 
 **# clean_p1 subroutine !!! alaki
